@@ -1,0 +1,189 @@
+# depslib dependency file v1.0
+1758738505 source:/home/lebrown/Documents/raylib_projects/raylib_viewer/main.cpp
+	<raylib.h>
+	<raymath.h>
+	<iostream>
+	<string>
+	<vector>
+	<chrono>
+	"include/common.h"
+	"include/openmenu.h"
+	"include/movemenu.h"
+	"include/rotatemenu.h"
+	"include/scalemenu.h"
+
+1732533343 /usr/include/raylib.h
+	<stdarg.h>
+	<stdbool.h>
+
+1732533343 /usr/include/raymath.h
+	<math.h>
+
+1755088226 /usr/include/math.h
+	<bits/libc-header-start.h>
+	<bits/types.h>
+	<bits/math-vector.h>
+	<bits/floatn.h>
+	<bits/flt-eval-method.h>
+	<bits/fp-logb.h>
+	<bits/fp-fast.h>
+	<bits/mathcalls-macros.h>
+	<bits/mathcalls-helper-functions.h>
+	<bits/mathcalls.h>
+	<bits/mathcalls-helper-functions.h>
+	<bits/mathcalls.h>
+	<bits/mathcalls-helper-functions.h>
+	<bits/mathcalls.h>
+	<bits/mathcalls-helper-functions.h>
+	<bits/mathcalls.h>
+	<bits/mathcalls-helper-functions.h>
+	<bits/mathcalls.h>
+	<bits/mathcalls-helper-functions.h>
+	<bits/mathcalls.h>
+	<bits/mathcalls-helper-functions.h>
+	<bits/mathcalls.h>
+	<bits/mathcalls-helper-functions.h>
+	<bits/mathcalls.h>
+	<bits/mathcalls-helper-functions.h>
+	<bits/mathcalls.h>
+	<bits/mathcalls-helper-functions.h>
+	<bits/mathcalls.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/mathcalls-narrow.h>
+	<bits/iscanonical.h>
+
+1755088226 /usr/include/bits/libc-header-start.h
+	<features.h>
+
+1755088226 /usr/include/features.h
+	<features-time64.h>
+	<stdc-predef.h>
+	<sys/cdefs.h>
+	<gnu/stubs.h>
+
+1755088226 /usr/include/features-time64.h
+	<bits/wordsize.h>
+	<bits/timesize.h>
+
+1755088226 /usr/include/bits/wordsize.h
+
+1755088226 /usr/include/bits/timesize.h
+	<bits/wordsize.h>
+
+1755088226 /usr/include/stdc-predef.h
+
+1755088226 /usr/include/sys/cdefs.h
+	<features.h>
+	<bits/wordsize.h>
+	<bits/long-double.h>
+
+1755088226 /usr/include/bits/long-double.h
+
+1755088226 /usr/include/gnu/stubs.h
+	<gnu/stubs-32.h>
+	<gnu/stubs-64.h>
+	<gnu/stubs-x32.h>
+
+1755088226 /usr/include/gnu/stubs-64.h
+
+1755088226 /usr/include/bits/types.h
+	<features.h>
+	<bits/wordsize.h>
+	<bits/timesize.h>
+	<bits/typesizes.h>
+	<bits/time64.h>
+
+1755088226 /usr/include/bits/typesizes.h
+
+1755088226 /usr/include/bits/time64.h
+
+1755088226 /usr/include/bits/math-vector.h
+	<bits/libm-simd-decl-stubs.h>
+
+1755088226 /usr/include/bits/libm-simd-decl-stubs.h
+
+1755088226 /usr/include/bits/floatn.h
+	<features.h>
+	<bits/floatn-common.h>
+
+1755088226 /usr/include/bits/floatn-common.h
+	<features.h>
+	<bits/long-double.h>
+
+1755088226 /usr/include/bits/flt-eval-method.h
+
+1755088226 /usr/include/bits/fp-logb.h
+
+1755088226 /usr/include/bits/fp-fast.h
+
+1755088226 /usr/include/bits/mathcalls-macros.h
+
+1755088226 /usr/include/bits/mathcalls-helper-functions.h
+
+1755088226 /usr/include/bits/mathcalls.h
+
+1755088226 /usr/include/bits/mathcalls-narrow.h
+
+1755088226 /usr/include/bits/iscanonical.h
+
+1758730592 source:/home/lebrown/Documents/raylib_projects/raylib_viewer/src/openmenu.cpp
+	"openmenu.h"
+
+1758729300 /home/lebrown/Documents/raylib_projects/raylib_viewer/include/openmenu.h
+	<raylib.h>
+	<raymath.h>
+	<iostream>
+	<string>
+	<chrono>
+	"common.h"
+
+1758740355 /home/lebrown/Documents/raylib_projects/raylib_viewer/include/common.h
+	<string>
+	<vector>
+	<cstdio>
+	<raylib.h>
+	<raymath.h>
+
+1758667605 /home/lebrown/Documents/raylib_projects/raylib_viewer/include/movemenu.h
+	"common.h"
+
+1758667733 source:/home/lebrown/Documents/raylib_projects/raylib_viewer/src/movemenu.cpp
+	"movemenu.h"
+
+1758673264 source:/home/lebrown/Documents/raylib_projects/raylib_viewer/src/rotatemenu.cpp
+	"rotatemenu.h"
+
+1758667947 /home/lebrown/Documents/raylib_projects/raylib_viewer/include/rotatemenu.h
+	"common.h"
+
+1758759477 source:/home/lebrown/Documents/raylib_projects/raylib_viewer/src/common.cpp
+	"common.h"
+
+1758737516 /home/lebrown/Documents/raylib_projects/raylib_viewer/include/scalemenu.h
+	"common.h"
+
+1758740468 source:/home/lebrown/Documents/raylib_projects/raylib_viewer/src/scalemenu.cpp
+	"scalemenu.h"
+
