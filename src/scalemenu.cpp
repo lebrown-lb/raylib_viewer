@@ -39,7 +39,7 @@ void ScaleMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
 
         if(CheckCollisionPointRec(mpos, buttonRectangle(m_update)))
         {
-            changeSelectedModelScale(m_xscale.contents,m_yscale.contents,m_zscale.contents,models);
+            changeSelectedModelScale(stringsToVector3(m_xscale.contents,m_yscale.contents,m_zscale.contents),models);
         }
 
         if(CheckCollisionPointRec(mpos, textBoxRectangle(m_xscale)))

@@ -243,7 +243,7 @@ int main(void)
 
 
         if(open_menu.isVisible() && (currentState == OPEN_MENU_STATE))
-            open_menu.handleInput(&currentState,models);
+            open_menu.handleInput(&currentState,collision,models);
         else if(move_menu.isVisible() && (currentState == MOVE_MENU_STATE))
             move_menu.handleInput(&currentState,collision,models);
         else if(rotate_menu.isVisible() && (currentState == ROTATE_MENU_STATE))

@@ -124,7 +124,22 @@ Vector3 calculateModelCenter(Model & x)
 
 }
 
-void loadModelx(std::string name, std::string model, std::string texture, std::vector<MODELX> & m)
+Vector3 stringsToVector3(std::string xstr, std::string ystr, std::string zstr)
+{
+    Vector3 tmp;
+    float x = std::stof(xstr);
+    float y = std::stof(ystr);
+    float z = std::stof(zstr);
+
+    tmp.x = x;
+    tmp.y = y;
+    tmp.z = z;
+
+    return tmp;
+
+}
+
+void loadModelx(std::string name, std::string model, std::string texture, Vector3 start, std::vector<MODELX> & m)
 {
     m.push_back({name,
                 model,
@@ -132,7 +147,7 @@ void loadModelx(std::string name, std::string model, std::string texture, std::v
                 LoadModel(model.c_str()),
                 LoadTexture(texture.c_str()),
                 (Vector3){0.0f, 0.0f, 0.0f},
-                (Vector3){0.0f, 0.0f, 0.0f},
+                start,
                 (Vector3){0.0f, 0.0f, 0.0f},
                 (Vector3){1.0f, 1.0f, 1.0f},
                 false,
@@ -146,19 +161,15 @@ void loadModelx(std::string name, std::string model, std::string texture, std::v
     m[idx].model.transform = MatrixTranslate(m[idx].location.x, m[idx].location.y, m[idx].location.z);
 }
 
-void changeSelectedModelLocation(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m)
+void changeSelectedModelLocation(Vector3 location, std::vector<MODELX> & m)
 {
-    float x = std::stof(xstr);
-    float y = std::stof(ystr);
-    float z = std::stof(zstr);
+
     for(size_t i = 0; i < m.size();i++)
     {
         if(m[i].selected)
         {
             Matrix t;
-            m[i].location.x = x;
-            m[i].location.y = y;
-            m[i].location.z = z;
+            m[i].location = location;
 
             t = MatrixTranslate(-m[i].center.x, -m[i].center.y, -m[i].center.z);
             t = MatrixMultiply(t,MatrixScale(m[i].scale.x,m[i].scale.y,m[i].scale.z));
@@ -174,19 +185,16 @@ void changeSelectedModelLocation(std::string xstr, std::string ystr, std::string
     }
 }
 
-void changeSelectedModelRotation(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m)
+void changeSelectedModelRotation(Vector3 rotation, std::vector<MODELX> & m)
 {
-    float x = std::stof(xstr) * DEG2RAD;
-    float y = std::stof(ystr) * DEG2RAD;
-    float z = std::stof(zstr) * DEG2RAD;
     for(size_t i = 0; i < m.size();i++)
     {
         if(m[i].selected)
         {
             Matrix t;
-            m[i].rotation.x = x;
-            m[i].rotation.y = y;
-            m[i].rotation.z = z;
+            m[i].rotation.x = rotation.x * DEG2RAD;
+            m[i].rotation.y = rotation.y * DEG2RAD;
+            m[i].rotation.z = rotation.z * DEG2RAD;
 
             t = MatrixTranslate(-m[i].center.x, -m[i].center.y, -m[i].center.z);
             t = MatrixMultiply(t,MatrixScale(m[i].scale.x,m[i].scale.y,m[i].scale.z));
@@ -203,19 +211,14 @@ void changeSelectedModelRotation(std::string xstr, std::string ystr, std::string
 
 }
 
-void changeSelectedModelScale(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m)
+void changeSelectedModelScale(Vector3 scale, std::vector<MODELX> & m)
 {
-    float x = std::stof(xstr);
-    float y = std::stof(ystr);
-    float z = std::stof(zstr);
     for(size_t i = 0; i < m.size();i++)
     {
         if(m[i].selected)
         {
             Matrix t;
-            m[i].scale.x = x;
-            m[i].scale.y = y;
-            m[i].scale.z = z;
+            m[i].scale = scale;
 
             t = MatrixTranslate(-m[i].center.x, -m[i].center.y, -m[i].center.z);
             t = MatrixMultiply(t,MatrixScale(m[i].scale.x,m[i].scale.y,m[i].scale.z));

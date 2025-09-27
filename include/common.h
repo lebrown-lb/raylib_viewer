@@ -61,13 +61,15 @@ BoundingBox calculateAndTransformBoundingBox(MODELX & x);
 
 Vector3 calculateModelCenter(Model & x);
 
-void loadModelx(std::string name, std::string model, std::string texture, std::vector<MODELX> & m);
+Vector3 stringsToVector3(std::string xstr, std::string ystr, std::string zstr);
 
-void changeSelectedModelLocation(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m);
+void loadModelx(std::string name, std::string model, std::string texture, Vector3 start, std::vector<MODELX> & m);
 
-void changeSelectedModelRotation(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m);
+void changeSelectedModelLocation(Vector3 location, std::vector<MODELX> & m);
 
-void changeSelectedModelScale(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m);
+void changeSelectedModelRotation(Vector3 rotation, std::vector<MODELX> & m);
+
+void changeSelectedModelScale(Vector3 scale, std::vector<MODELX> & m);
 
 Rectangle textBoxRectangle(TEXTBOX &tb);
 

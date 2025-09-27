@@ -39,7 +39,7 @@ void RotateMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
 
         if(CheckCollisionPointRec(mpos, buttonRectangle(m_update)))
         {
-            changeSelectedModelRotation(m_xrot.contents,m_yrot.contents,m_zrot.contents,models);
+            changeSelectedModelRotation(stringsToVector3(m_xrot.contents,m_yrot.contents,m_zrot.contents),models);
         }
 
         if(CheckCollisionPointRec(mpos, textBoxRectangle(m_xrot)))

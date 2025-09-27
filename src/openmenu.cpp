@@ -11,19 +11,23 @@ OpenMenu::OpenMenu(int width, int height)
     : m_screenWidth(width), m_screenHeight(height)
 {
     //ctor
-    m_name = {"Name:", 10, m_screenHeight-125, m_screenWidth-20, 25, BLACK, "", false};
-    m_model = {"Model Location:", 10, m_screenHeight-80, m_screenWidth-20, 25, BLACK, "", false};
-    m_texture = {"Texture Location:", 10, m_screenHeight-35, m_screenWidth-20, 25, BLACK, "", false};
+    m_name = {"Name:", 10, m_screenHeight-170, m_screenWidth-20, 25, BLACK, "", false};
+    m_model = {"Model Location:", 10, m_screenHeight-125, m_screenWidth-20, 25, BLACK, "", false};
+    m_texture = {"Texture Location:", 10, m_screenHeight-80, m_screenWidth-20, 25, BLACK, "", false};
     int space = m_screenWidth / 3;
     int x = space * 2 + 10;
     int w = space - 20;
 
-    m_load = {"LOAD", x, m_screenHeight - 170, w, 25};
-    m_close = {"CLOSE", space + 10, m_screenHeight - 170, w, 25};
-    m_clear = {"CLEAR", 10, m_screenHeight - 170, w, 25};
+    m_load = {"LOAD", x, m_screenHeight - 215, w, 25};
+    m_close = {"CLOSE", space + 10, m_screenHeight - 215, w, 25};
+    m_clear = {"CLEAR", 10, m_screenHeight - 215, w, 25};
 
-    m_scene = {"Scene Location:", 10, m_screenHeight - 215, 2*w+20, 25, BLACK, "", false};
-    m_loadScene = {"LOAD SCENE", x, m_screenHeight - 215, w, 25};
+    m_scene = {"Scene Location:", 10, m_screenHeight - 260, 2*w+20, 25, BLACK, "", false};
+    m_loadScene = {"LOAD SCENE", x, m_screenHeight - 260, w, 25};
+
+    m_xstart = {"X START POSITION:", 10, m_screenHeight - 35, w, 25, BLACK, "", false};
+    m_ystart = {"Y START POSITION:", space + 10, m_screenHeight - 35, w, 25, BLACK, "", false};
+    m_zstart = {"Z START POSITION:", x, m_screenHeight - 35, w, 25, BLACK, "", false};
 
     m_timestamp = std::chrono::steady_clock::now();
 }
@@ -34,7 +38,7 @@ OpenMenu::~OpenMenu()
 }
 
 
-void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
+void OpenMenu::handleInput(STATE * currentState,RayCollision collision, std::vector<MODELX> & models)
 {
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
@@ -47,7 +51,8 @@ void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
         }
         else if(CheckCollisionPointRec(mpos, buttonRectangle(m_load)))
         {
-            loadModelx(m_name.contents, m_model.contents,m_texture.contents,models);
+            Vector3 tmp = stringsToVector3(m_xstart.contents,m_ystart.contents,m_zstart.contents);
+            loadModelx(m_name.contents, m_model.contents,m_texture.contents,tmp,models);
             m_history.push_back({m_name.contents,m_model.contents,m_texture.contents});
             m_history_idx = m_history.size();
         }
@@ -61,6 +66,12 @@ void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
                 m_texture.contents = "";
             else if(m_scene.selected)
                 m_scene.contents = "";
+            else if(m_xstart.selected)
+                m_xstart.contents = "";
+            else if(m_ystart.selected)
+                m_ystart.contents = "";
+            else if(m_zstart.selected)
+                m_zstart.contents = "";
         }
         else if(CheckCollisionPointRec(mpos, buttonRectangle(m_loadScene)))
         {
@@ -73,6 +84,9 @@ void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
             setTextBoxSelection(m_model, false);
             setTextBoxSelection(m_texture, false);
             setTextBoxSelection(m_scene, false);
+            setTextBoxSelection(m_xstart, false);
+            setTextBoxSelection(m_ystart, false);
+            setTextBoxSelection(m_zstart, false);
 
 
         }
@@ -82,6 +96,9 @@ void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
             setTextBoxSelection(m_model, true);
             setTextBoxSelection(m_texture, false);
             setTextBoxSelection(m_scene, false);
+            setTextBoxSelection(m_xstart, false);
+            setTextBoxSelection(m_ystart, false);
+            setTextBoxSelection(m_zstart, false);
         }
         else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_texture)))
         {
@@ -89,6 +106,9 @@ void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
             setTextBoxSelection(m_model, false);
             setTextBoxSelection(m_texture, true);
             setTextBoxSelection(m_scene, false);
+            setTextBoxSelection(m_xstart, false);
+            setTextBoxSelection(m_ystart, false);
+            setTextBoxSelection(m_zstart, false);
         }
         else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_scene)))
         {
@@ -96,6 +116,39 @@ void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
             setTextBoxSelection(m_model, false);
             setTextBoxSelection(m_texture, false);
             setTextBoxSelection(m_scene, true);
+            setTextBoxSelection(m_xstart, false);
+            setTextBoxSelection(m_ystart, false);
+            setTextBoxSelection(m_zstart, false);
+        }
+        else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_xstart)))
+        {
+            setTextBoxSelection(m_name, false);
+            setTextBoxSelection(m_model, false);
+            setTextBoxSelection(m_texture, false);
+            setTextBoxSelection(m_scene, false);
+            setTextBoxSelection(m_xstart, true);
+            setTextBoxSelection(m_ystart, false);
+            setTextBoxSelection(m_zstart, false);
+        }
+        else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_ystart)))
+        {
+            setTextBoxSelection(m_name, false);
+            setTextBoxSelection(m_model, false);
+            setTextBoxSelection(m_texture, false);
+            setTextBoxSelection(m_scene, false);
+            setTextBoxSelection(m_xstart, false);
+            setTextBoxSelection(m_ystart, true);
+            setTextBoxSelection(m_zstart, false);
+        }
+        else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_zstart)))
+        {
+            setTextBoxSelection(m_name, false);
+            setTextBoxSelection(m_model, false);
+            setTextBoxSelection(m_texture, false);
+            setTextBoxSelection(m_scene, false);
+            setTextBoxSelection(m_xstart, false);
+            setTextBoxSelection(m_ystart, false);
+            setTextBoxSelection(m_zstart, true);
         }
         else
         {
@@ -103,6 +156,9 @@ void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
             setTextBoxSelection(m_model, false);
             setTextBoxSelection(m_texture, false);
             setTextBoxSelection(m_scene, false);
+            setTextBoxSelection(m_xstart, false);
+            setTextBoxSelection(m_ystart, false);
+            setTextBoxSelection(m_zstart, false);
         }
     }
 
@@ -117,6 +173,12 @@ void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
             m_texture.contents += (char)key;
         else if(m_scene.selected)
             m_scene.contents += (char)key;
+        else if(m_xstart.selected)
+            m_xstart.contents += (char)key;
+        else if(m_ystart.selected)
+            m_ystart.contents += (char)key;
+        else if(m_zstart.selected)
+            m_zstart.contents += (char)key;
     }
 
     if(IsKeyPressed(KEY_BACKSPACE))
@@ -129,6 +191,12 @@ void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
             m_texture.contents.pop_back();
         else if(m_scene.selected && (m_scene.contents.size() > 0))
             m_scene.contents.pop_back();
+        else if(m_xstart.selected && (m_model.contents.size() > 0))
+            m_xstart.contents.pop_back();
+        else if(m_ystart.selected && (m_texture.contents.size() > 0))
+            m_ystart.contents.pop_back();
+        else if(m_zstart.selected && (m_scene.contents.size() > 0))
+            m_zstart.contents.pop_back();
 
     }
 
@@ -182,6 +250,13 @@ void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
         }
     }
 
+    if(IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE) && collision.hit)
+    {
+        m_xstart.contents = std::to_string(collision.point.x);
+        m_ystart.contents = std::to_string(collision.point.y);
+        m_zstart.contents = std::to_string(collision.point.z);
+    }
+
 }
 
 void OpenMenu::drawMenu(void)
@@ -214,6 +289,17 @@ void OpenMenu::drawMenu(void)
     DrawRectangle(m_loadScene.xpos, m_loadScene.ypos, m_loadScene.width, m_loadScene.height, GRAY);
     DrawText(m_loadScene.name, (m_loadScene.xpos + (m_loadScene.width/2) - 40), m_loadScene.ypos + 8, 10, WHITE);
 
+    DrawRectangleLines( m_xstart.xpos, m_xstart.ypos, m_xstart.width, m_xstart.height, m_xstart.boxColor);
+    DrawText(m_xstart.name, m_xstart.xpos, m_xstart.ypos - 15, 10, BLACK );
+    DrawText(m_xstart.contents.c_str(), m_xstart.xpos + 5, m_xstart.ypos + 8, 10, BLACK );
+
+    DrawRectangleLines( m_ystart.xpos, m_ystart.ypos, m_ystart.width, m_ystart.height, m_ystart.boxColor);
+    DrawText(m_ystart.name, m_ystart.xpos, m_ystart.ypos - 15, 10, BLACK );
+    DrawText(m_ystart.contents.c_str(), m_ystart.xpos + 5, m_ystart.ypos + 8, 10, BLACK );
+
+    DrawRectangleLines( m_zstart.xpos, m_zstart.ypos, m_zstart.width, m_zstart.height, m_zstart.boxColor);
+    DrawText(m_zstart.name, m_zstart.xpos, m_zstart.ypos - 15, 10, BLACK );
+    DrawText(m_zstart.contents.c_str(), m_zstart.xpos + 5, m_zstart.ypos + 8, 10, BLACK );
 }
 
 

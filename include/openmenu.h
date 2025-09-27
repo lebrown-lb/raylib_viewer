@@ -21,7 +21,7 @@ class OpenMenu
         OpenMenu();
         OpenMenu(int width, int height);
         virtual ~OpenMenu();
-        void handleInput(STATE *currentState,std::vector<MODELX> & models);
+        void handleInput(STATE *currentState,RayCollision collision,std::vector<MODELX> & models);
         void drawMenu(void);
         bool isVisible(void)
         {
@@ -40,6 +40,9 @@ class OpenMenu
         TEXTBOX m_name;
         TEXTBOX m_model;
         TEXTBOX m_texture;
+        TEXTBOX m_xstart;
+        TEXTBOX m_ystart;
+        TEXTBOX m_zstart;
         PUSHBUTTON m_loadScene;
         PUSHBUTTON m_load;
         PUSHBUTTON m_close;
