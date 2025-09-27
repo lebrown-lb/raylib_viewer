@@ -12,12 +12,13 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=gnu++17" />
 					<Add option="-g" />
 					<Add directory="/usr/include" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
-					<Add option="-lraylib -lGL -lm -lpthread -ldl -lrt" />
+					<Add option="-lraylib -lGL -lm -pthread -ldl -lrt" />
 					<Add directory="/usr/lib" />
 				</Linker>
 			</Target>
@@ -42,10 +43,15 @@
 		<Unit filename="include/movemenu.h" />
 		<Unit filename="include/openmenu.h" />
 		<Unit filename="include/rotatemenu.h" />
+		<Unit filename="include/savemenu.h" />
+		<Unit filename="include/scalemenu.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/common.cpp" />
 		<Unit filename="src/movemenu.cpp" />
 		<Unit filename="src/openmenu.cpp" />
 		<Unit filename="src/rotatemenu.cpp" />
+		<Unit filename="src/savemenu.cpp" />
+		<Unit filename="src/scalemenu.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

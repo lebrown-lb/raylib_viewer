@@ -1,4 +1,7 @@
 #include "common.h"
+#include <iostream>
+
+
 
 BoundingBox calculateBoundingBox(Model & x)
 {
@@ -121,9 +124,11 @@ Vector3 calculateModelCenter(Model & x)
 
 }
 
-void loadModelx(std::string name, std::string model, std::string texture, std::vector<MODELX> & m, std::vector<BoundingBox> & b)
+void loadModelx(std::string name, std::string model, std::string texture, std::vector<MODELX> & m)
 {
     m.push_back({name,
+                model,
+                texture,
                 LoadModel(model.c_str()),
                 LoadTexture(texture.c_str()),
                 (Vector3){0.0f, 0.0f, 0.0f},
@@ -131,16 +136,17 @@ void loadModelx(std::string name, std::string model, std::string texture, std::v
                 (Vector3){0.0f, 0.0f, 0.0f},
                 (Vector3){1.0f, 1.0f, 1.0f},
                 false,
-                WHITE});
+                WHITE,
+                {(Vector3){0.0f, 0.0f, 0.0f},(Vector3){0.0f, 0.0f, 0.0f}}});
     size_t idx = m.size() - 1;
     if(texture != "")
         m[idx].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = m[idx].texture;            // Set model diffuse texture
     m[idx].center = calculateModelCenter(m[idx].model);
-    b.push_back(calculateAndTransformBoundingBox(m[idx])); // Get mesh bounding box
+    m[idx].bbox = calculateAndTransformBoundingBox(m[idx]); // Get mesh bounding box
     m[idx].model.transform = MatrixTranslate(m[idx].location.x, m[idx].location.y, m[idx].location.z);
 }
 
-void changeSelectedModelLocation(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m, std::vector<BoundingBox> & b)
+void changeSelectedModelLocation(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m)
 {
     float x = std::stof(xstr);
     float y = std::stof(ystr);
@@ -160,7 +166,7 @@ void changeSelectedModelLocation(std::string xstr, std::string ystr, std::string
             t = MatrixMultiply(t,MatrixTranslate(m[i].location.x, m[i].location.y, m[i].location.z));
             t = MatrixMultiply(t,MatrixTranslate(m[i].center.x,m[i].center.y,m[i].center.z));
             m[i].model.transform = t;
-            b[i] = calculateAndTransformBoundingBox(m[i]);
+            m[i].bbox = calculateAndTransformBoundingBox(m[i]);
 
 
         }
@@ -168,7 +174,7 @@ void changeSelectedModelLocation(std::string xstr, std::string ystr, std::string
     }
 }
 
-void changeSelectedModelRotation(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m, std::vector<BoundingBox> & b)
+void changeSelectedModelRotation(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m)
 {
     float x = std::stof(xstr) * DEG2RAD;
     float y = std::stof(ystr) * DEG2RAD;
@@ -188,7 +194,7 @@ void changeSelectedModelRotation(std::string xstr, std::string ystr, std::string
             t = MatrixMultiply(t,MatrixTranslate(m[i].location.x, m[i].location.y, m[i].location.z));
             t = MatrixMultiply(t,MatrixTranslate(m[i].center.x,m[i].center.y,m[i].center.z));
             m[i].model.transform = t;
-            b[i] = calculateAndTransformBoundingBox(m[i]);
+            m[i].bbox = calculateAndTransformBoundingBox(m[i]);
 
 
         }
@@ -197,7 +203,7 @@ void changeSelectedModelRotation(std::string xstr, std::string ystr, std::string
 
 }
 
-void changeSelectedModelScale(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m, std::vector<BoundingBox> & b)
+void changeSelectedModelScale(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m)
 {
     float x = std::stof(xstr);
     float y = std::stof(ystr);
@@ -217,7 +223,7 @@ void changeSelectedModelScale(std::string xstr, std::string ystr, std::string zs
             t = MatrixMultiply(t,MatrixTranslate(m[i].location.x, m[i].location.y, m[i].location.z));
             t = MatrixMultiply(t,MatrixTranslate(m[i].center.x,m[i].center.y,m[i].center.z));
             m[i].model.transform = t;
-            b[i] = calculateAndTransformBoundingBox(m[i]);
+            m[i].bbox = calculateAndTransformBoundingBox(m[i]);
 
 
         }
@@ -225,6 +231,7 @@ void changeSelectedModelScale(std::string xstr, std::string ystr, std::string zs
     }
 
 }
+
 
 Rectangle textBoxRectangle(TEXTBOX &tb)
 {

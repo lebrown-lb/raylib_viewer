@@ -21,11 +21,14 @@
 #include <string>
 #include <vector>
 #include <chrono>
+#include <thread>
+#include <mutex>
 #include "include/common.h"
 #include "include/openmenu.h"
 #include "include/movemenu.h"
 #include "include/rotatemenu.h"
 #include "include/scalemenu.h"
+#include "include/savemenu.h"
 
 #undef FLT_MAX
 #define FLT_MAX     340282346638528859811704183484516925440.0f     // Maximum value of a float, from bit pattern 01111111011111111111111111111111
@@ -58,6 +61,7 @@ QUAD generate_quad(int g_cnt, float g_size)
 }
 
 
+
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
@@ -83,11 +87,11 @@ int main(void)
     Ray ray = { 0 };        // Picking ray
 
     std::vector<MODELX> models;
-    std::vector<BoundingBox> bboxs;
     OpenMenu open_menu(screenWidth, screenHeight);
     MoveMenu move_menu(screenWidth, screenHeight);
     RotateMenu rotate_menu(screenWidth, screenHeight);
     ScaleMenu scale_menu(screenWidth, screenHeight);
+    SaveMenu save_menu(screenWidth, screenHeight);
     STATE currentState = MAIN_STATE;
 
     // Ground quad
@@ -215,6 +219,11 @@ int main(void)
                 currentState = SCALE_MENU_STATE;
                 scale_menu.setVisible(true);
             }
+            else if(IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_S))
+            {
+                currentState = SAVE_MENU_STATE;
+                save_menu.setVisible(true);
+            }
 
             if(IsKeyPressed(KEY_DELETE))
             {
@@ -222,8 +231,10 @@ int main(void)
                 {
                     if(models[i].selected)
                     {
+                        UnloadModel(models[i].model);
+                        UnloadTexture(models[i].texture);
                         models.erase(models.begin() + i);
-                        bboxs.erase(bboxs.begin() + i);
+                        break;
                     }
                 }
             }
@@ -232,14 +243,15 @@ int main(void)
 
 
         if(open_menu.isVisible() && (currentState == OPEN_MENU_STATE))
-            open_menu.handleInput(&currentState,models,bboxs);
+            open_menu.handleInput(&currentState,models);
         else if(move_menu.isVisible() && (currentState == MOVE_MENU_STATE))
-            move_menu.handleInput(&currentState,collision,models,bboxs);
+            move_menu.handleInput(&currentState,collision,models);
         else if(rotate_menu.isVisible() && (currentState == ROTATE_MENU_STATE))
-            rotate_menu.handleInput(&currentState,models,bboxs);
+            rotate_menu.handleInput(&currentState,models);
         else if(scale_menu.isVisible() && (currentState == SCALE_MENU_STATE))
-            scale_menu.handleInput(&currentState,models,bboxs);
-
+            scale_menu.handleInput(&currentState,models);
+        else if(save_menu.isVisible() && (currentState == SAVE_MENU_STATE))
+            save_menu.handleInput(&currentState,models);
 
 
         //----------------------------------------------------------------------------------
@@ -260,7 +272,7 @@ int main(void)
             DrawModel(models[i].model,location , 1.0f, models[i].color);
             // Draw the mesh bbox if we hit it
             if (models[i].selected)
-                DrawBoundingBox(bboxs[i], LIME);
+                DrawBoundingBox(models[i].bbox, LIME);
         }
 
 
@@ -313,6 +325,8 @@ int main(void)
             rotate_menu.drawMenu();
         if(scale_menu.isVisible())
             scale_menu.drawMenu();
+        if(save_menu.isVisible())
+            save_menu.drawMenu();
 
 
         DrawFPS(10, 10);

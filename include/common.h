@@ -4,12 +4,15 @@
 #include <string>
 #include <vector>
 #include <cstdio>
+#include <mutex>
 #include <raylib.h>
 #include <raymath.h>
 
 
 struct MODELX{
     std::string name;
+    std::string mFile;
+    std::string tFile;
     Model model;
     Texture2D texture;
     Vector3 center = { 0.0f, 0.0f, 0.0f};
@@ -18,6 +21,7 @@ struct MODELX{
     Vector3 scale = { 1.0f, 1.0f, 1.0f};
     bool selected;
     Color color;
+    BoundingBox bbox;
 };
 
 struct TEXTBOX{
@@ -44,7 +48,8 @@ enum STATE{
     OPEN_MENU_STATE,
     MOVE_MENU_STATE,
     ROTATE_MENU_STATE,
-    SCALE_MENU_STATE
+    SCALE_MENU_STATE,
+    SAVE_MENU_STATE
 
 };
 
@@ -56,13 +61,13 @@ BoundingBox calculateAndTransformBoundingBox(MODELX & x);
 
 Vector3 calculateModelCenter(Model & x);
 
-void loadModelx(std::string name, std::string model, std::string texture, std::vector<MODELX> & m, std::vector<BoundingBox> & b);
+void loadModelx(std::string name, std::string model, std::string texture, std::vector<MODELX> & m);
 
-void changeSelectedModelLocation(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m, std::vector<BoundingBox> & b);
+void changeSelectedModelLocation(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m);
 
-void changeSelectedModelRotation(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m, std::vector<BoundingBox> & b);
+void changeSelectedModelRotation(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m);
 
-void changeSelectedModelScale(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m, std::vector<BoundingBox> & b);
+void changeSelectedModelScale(std::string xstr, std::string ystr, std::string zstr, std::vector<MODELX> & m);
 
 Rectangle textBoxRectangle(TEXTBOX &tb);
 

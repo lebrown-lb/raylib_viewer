@@ -24,7 +24,7 @@ ScaleMenu::~ScaleMenu()
 }
 
 
-void ScaleMenu::handleInput(STATE * currentState, std::vector<MODELX> & models, std::vector<BoundingBox> & bboxs)
+void ScaleMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
 {
    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
@@ -39,7 +39,7 @@ void ScaleMenu::handleInput(STATE * currentState, std::vector<MODELX> & models, 
 
         if(CheckCollisionPointRec(mpos, buttonRectangle(m_update)))
         {
-            changeSelectedModelScale(m_xscale.contents,m_yscale.contents,m_zscale.contents,models,bboxs);
+            changeSelectedModelScale(m_xscale.contents,m_yscale.contents,m_zscale.contents,models);
         }
 
         if(CheckCollisionPointRec(mpos, textBoxRectangle(m_xscale)))

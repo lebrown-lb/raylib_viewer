@@ -24,7 +24,7 @@ MoveMenu::~MoveMenu()
 }
 
 
-void MoveMenu::handleInput(STATE * currentState,RayCollision collision, std::vector<MODELX> & models, std::vector<BoundingBox> & bboxs)
+void MoveMenu::handleInput(STATE * currentState,RayCollision collision, std::vector<MODELX> & models)
 {
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
@@ -39,7 +39,7 @@ void MoveMenu::handleInput(STATE * currentState,RayCollision collision, std::vec
 
         if(CheckCollisionPointRec(mpos, buttonRectangle(m_update)))
         {
-            changeSelectedModelLocation(m_xpos.contents, m_ypos.contents, m_zpos.contents, models,bboxs);
+            changeSelectedModelLocation(m_xpos.contents, m_ypos.contents, m_zpos.contents, models);
         }
 
         if(CheckCollisionPointRec(mpos, textBoxRectangle(m_xpos)))

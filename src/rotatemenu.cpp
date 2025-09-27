@@ -24,7 +24,7 @@ RotateMenu::~RotateMenu()
 }
 
 
-void RotateMenu::handleInput(STATE * currentState, std::vector<MODELX> & models, std::vector<BoundingBox> & bboxs)
+void RotateMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
 {
    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
@@ -39,7 +39,7 @@ void RotateMenu::handleInput(STATE * currentState, std::vector<MODELX> & models,
 
         if(CheckCollisionPointRec(mpos, buttonRectangle(m_update)))
         {
-            changeSelectedModelRotation(m_xrot.contents,m_yrot.contents,m_zrot.contents,models,bboxs);
+            changeSelectedModelRotation(m_xrot.contents,m_yrot.contents,m_zrot.contents,models);
         }
 
         if(CheckCollisionPointRec(mpos, textBoxRectangle(m_xrot)))

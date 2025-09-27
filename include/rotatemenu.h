@@ -8,7 +8,7 @@ class RotateMenu
         RotateMenu();
         RotateMenu(int width, int height);
         virtual ~RotateMenu();
-        void handleInput(STATE *currentState,std::vector<MODELX> & models, std::vector<BoundingBox> & bboxs);
+        void handleInput(STATE *currentState,std::vector<MODELX> & models);
         void drawMenu(void);
         bool isVisible(void)
         {

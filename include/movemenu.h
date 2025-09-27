@@ -8,7 +8,7 @@ class MoveMenu
         MoveMenu();
         MoveMenu(int width, int height);
         virtual ~MoveMenu();
-        void handleInput(STATE *currentState, RayCollision collision,std::vector<MODELX> & models, std::vector<BoundingBox> & bboxs);
+        void handleInput(STATE *currentState, RayCollision collision,std::vector<MODELX> & models);
         void drawMenu(void);
         bool isVisible(void)
         {

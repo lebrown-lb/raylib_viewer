@@ -21,7 +21,7 @@ class OpenMenu
         OpenMenu();
         OpenMenu(int width, int height);
         virtual ~OpenMenu();
-        void handleInput(STATE *currentState,std::vector<MODELX> & models, std::vector<BoundingBox> & bboxs);
+        void handleInput(STATE *currentState,std::vector<MODELX> & models);
         void drawMenu(void);
         bool isVisible(void)
         {
@@ -36,9 +36,11 @@ class OpenMenu
             m_screenWidth = width;
             m_screenHeight = height;
         }
+        TEXTBOX m_scene;
         TEXTBOX m_name;
         TEXTBOX m_model;
         TEXTBOX m_texture;
+        PUSHBUTTON m_loadScene;
         PUSHBUTTON m_load;
         PUSHBUTTON m_close;
         PUSHBUTTON m_clear;
@@ -46,6 +48,11 @@ class OpenMenu
     protected:
 
     private:
+        std::vector<std::string> parse_string_by_curly_braces(std::string str);
+        std::vector<std::string> parse_variable_string(std::string str);
+        Vector3 parse_vector3_string(std::string str);
+        std::string readFileToString(const std::string& filePath);
+        void loadSceneFile(std::string fpath, std::vector<MODELX> & m);
         std::chrono::steady_clock::time_point m_timestamp;
         OPENFIELDS m_current;
         std::vector<OPENFIELDS> m_history;

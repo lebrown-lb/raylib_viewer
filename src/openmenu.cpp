@@ -1,5 +1,6 @@
 #include "openmenu.h"
-
+#include <fstream>    // For std::ifstream
+#include <sstream>    // For std::stringstream
 
 OpenMenu::OpenMenu()
 {
@@ -21,6 +22,9 @@ OpenMenu::OpenMenu(int width, int height)
     m_close = {"CLOSE", space + 10, m_screenHeight - 170, w, 25};
     m_clear = {"CLEAR", 10, m_screenHeight - 170, w, 25};
 
+    m_scene = {"Scene Location:", 10, m_screenHeight - 215, 2*w+20, 25, BLACK, "", false};
+    m_loadScene = {"LOAD SCENE", x, m_screenHeight - 215, w, 25};
+
     m_timestamp = std::chrono::steady_clock::now();
 }
 
@@ -30,7 +34,7 @@ OpenMenu::~OpenMenu()
 }
 
 
-void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models, std::vector<BoundingBox> & bboxs)
+void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
 {
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
@@ -43,7 +47,7 @@ void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models, s
         }
         else if(CheckCollisionPointRec(mpos, buttonRectangle(m_load)))
         {
-            loadModelx(m_name.contents, m_model.contents,m_texture.contents,models,bboxs);
+            loadModelx(m_name.contents, m_model.contents,m_texture.contents,models);
             m_history.push_back({m_name.contents,m_model.contents,m_texture.contents});
             m_history_idx = m_history.size();
         }
@@ -55,6 +59,12 @@ void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models, s
                 m_model.contents = "";
             else if(m_texture.selected)
                 m_texture.contents = "";
+            else if(m_scene.selected)
+                m_scene.contents = "";
+        }
+        else if(CheckCollisionPointRec(mpos, buttonRectangle(m_loadScene)))
+        {
+            loadSceneFile(m_scene.contents, models);
         }
 
         if(CheckCollisionPointRec(mpos, textBoxRectangle(m_name)))
@@ -62,6 +72,8 @@ void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models, s
             setTextBoxSelection(m_name, true);
             setTextBoxSelection(m_model, false);
             setTextBoxSelection(m_texture, false);
+            setTextBoxSelection(m_scene, false);
+
 
         }
         else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_model)))
@@ -69,18 +81,28 @@ void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models, s
             setTextBoxSelection(m_name, false);
             setTextBoxSelection(m_model, true);
             setTextBoxSelection(m_texture, false);
+            setTextBoxSelection(m_scene, false);
         }
         else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_texture)))
         {
             setTextBoxSelection(m_name, false);
             setTextBoxSelection(m_model, false);
             setTextBoxSelection(m_texture, true);
+            setTextBoxSelection(m_scene, false);
+        }
+        else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_scene)))
+        {
+            setTextBoxSelection(m_name, false);
+            setTextBoxSelection(m_model, false);
+            setTextBoxSelection(m_texture, false);
+            setTextBoxSelection(m_scene, true);
         }
         else
         {
             setTextBoxSelection(m_name, false);
             setTextBoxSelection(m_model, false);
             setTextBoxSelection(m_texture, false);
+            setTextBoxSelection(m_scene, false);
         }
     }
 
@@ -93,6 +115,8 @@ void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models, s
             m_model.contents += (char)key;
         else if(m_texture.selected)
             m_texture.contents += (char)key;
+        else if(m_scene.selected)
+            m_scene.contents += (char)key;
     }
 
     if(IsKeyPressed(KEY_BACKSPACE))
@@ -103,6 +127,8 @@ void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models, s
             m_model.contents.pop_back();
         else if(m_texture.selected && (m_texture.contents.size() > 0))
             m_texture.contents.pop_back();
+        else if(m_scene.selected && (m_scene.contents.size() > 0))
+            m_scene.contents.pop_back();
 
     }
 
@@ -117,6 +143,8 @@ void OpenMenu::handleInput(STATE * currentState, std::vector<MODELX> & models, s
             m_model.contents += getClipboardText();
         else if(m_texture.selected && (time > 1000000))
             m_texture.contents += getClipboardText();
+        else if(m_scene.selected && (time > 1000000))
+            m_scene.contents += getClipboardText();
 
         m_timestamp = ts;
 
@@ -178,5 +206,212 @@ void OpenMenu::drawMenu(void)
 
     DrawRectangle(m_clear.xpos, m_clear.ypos, m_clear.width, m_clear.height, GRAY);
     DrawText(m_clear.name, (m_clear.xpos + (m_clear.width/2) - 20), m_clear.ypos + 8, 10, WHITE);
+
+    DrawRectangleLines( m_scene.xpos, m_scene.ypos, m_scene.width, m_scene.height, m_scene.boxColor);
+    DrawText(m_scene.name, m_scene.xpos, m_scene.ypos - 15, 10, BLACK );
+    DrawText(m_scene.contents.c_str(), m_scene.xpos + 5, m_scene.ypos + 8, 10, BLACK );
+
+    DrawRectangle(m_loadScene.xpos, m_loadScene.ypos, m_loadScene.width, m_loadScene.height, GRAY);
+    DrawText(m_loadScene.name, (m_loadScene.xpos + (m_loadScene.width/2) - 40), m_loadScene.ypos + 8, 10, WHITE);
+
+}
+
+
+std::vector<std::string> OpenMenu::parse_string_by_curly_braces(std::string str)
+{
+    std::vector<std::string> sections;
+    int brace_count = 0;
+    std::string current_section;
+
+    for (char c : str)
+    {
+        if (c == '{')
+        {
+            brace_count++;
+            if (brace_count == 1) // Start of a new top-level section
+            {
+                current_section.clear();
+            }
+        }
+        else if (c == '}')
+        {
+            brace_count--;
+            if (brace_count == 0) // End of a top-level section
+            {
+                current_section += '}';
+                sections.push_back(current_section);
+                current_section.clear();
+            }
+        }
+        if (brace_count > 0) // Inside a section
+            if((c != '\n') && (c != '\r'))
+                current_section += c;
+    }
+
+    return sections;
+
+}
+
+
+std::vector<std::string> OpenMenu::parse_variable_string(std::string str)
+{
+    std::vector<std::string> sections;
+    int brace_count = 0;
+    std::string current_section;
+    size_t first = str.find('{');
+    size_t last = str.rfind('}');
+
+    str.erase(first,1);
+    str.erase(last,1);
+
+    size_t s = str.size() - 1;
+    size_t cnt = 0;
+
+    for (char c : str)
+    {
+        if (c == '{')
+            brace_count++;
+        else if (c == '}')
+            brace_count--;
+
+        if ((brace_count == 0) && (c == ','))
+        {
+            sections.push_back(current_section);
+            current_section.clear();
+
+        }
+        else if(cnt == s)
+            sections.push_back(current_section);
+        else
+        {
+            if(c != ' ')
+                current_section += c;
+        }
+
+        cnt++;
+    }
+
+    return sections;
+
+
+}
+
+
+Vector3 OpenMenu::parse_vector3_string(std::string str)
+{
+    Vector3 result = {0.0f, 0.0f, 0.0f};
+    std::vector<std::string> vstrings = parse_variable_string(str);
+    if(vstrings.size() != 3)
+        return result;
+
+    result.x = std::stof(vstrings[0]);
+    result.y = std::stof(vstrings[1]);
+    result.z = std::stof(vstrings[2]);
+
+    return result;
+
+
+}
+
+
+std::string OpenMenu::readFileToString(const std::string& filePath)
+{
+    std::ifstream inputFile(filePath);
+    std::stringstream buffer;
+    std::string fileContent;
+
+    if (!inputFile.is_open())
+    {
+        std::cout << "Error: Could not open file " << filePath << std::endl;
+        return ""; // Return an empty string on error
+    }
+
+    // Read the entire file content into the stringstream buffer
+    buffer << inputFile.rdbuf();
+
+    // Get the string from the stringstream buffer
+    fileContent = buffer.str();
+
+    inputFile.close(); // Close the file stream
+
+    return fileContent;
+}
+
+
+void OpenMenu::loadSceneFile(std::string fpath, std::vector<MODELX> & m)
+{
+    std::string contents = readFileToString(fpath);
+
+    if(contents == "")
+        return;
+
+    std::vector<std::string> sections = parse_string_by_curly_braces(contents);
+
+    size_t idx;
+    for(std::string x : sections)
+    {
+        std::vector<std::string> variables = parse_variable_string(x);
+        if(variables.size() != 6)
+        {
+            std::cout << "ERROR PARSING FILE" << std::endl;
+            break;
+        }
+
+        std::string name = variables[0];
+        std::string model = variables[1];
+        std::string texture = variables[2];
+        std::cout << "-----------------------------------------------------------------------------------" << std::endl;
+        std::cout << "name:" << name << std::endl;
+        std::cout << "model:" << model << std::endl;
+        std::cout << "texture:" << texture << std::endl;
+
+        Vector3 location = parse_vector3_string(variables[3]);
+        Vector3 rotation = parse_vector3_string(variables[4]);
+        Vector3 scale = parse_vector3_string(variables[5]);
+
+        if((scale.x == 0.0f) || (scale.y == 0.0f) || (scale.z == 0.0f))
+        {
+            scale.x = 1.0f;
+            scale.y = 1.0f;
+            scale.z = 1.0f;
+        }
+
+
+
+
+
+        m.push_back({name,
+                    model,
+                    texture,
+                    LoadModel(model.c_str()),
+                    LoadTexture(texture.c_str()),
+                    (Vector3){0.0f, 0.0f, 0.0f},
+                    location,
+                    rotation,
+                    scale,
+                    false,
+                    WHITE,
+                    {(Vector3){0.0f, 0.0f, 0.0f},(Vector3){0.0f, 0.0f, 0.0f}}});
+
+        idx = m.size() - 1;
+
+        if(texture != "")
+            m[idx].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = m[idx].texture;
+        m[idx].center = calculateModelCenter(m[idx].model);
+        m[idx].bbox = calculateAndTransformBoundingBox(m[idx]);
+        Matrix t = MatrixTranslate(-m[idx].center.x, -m[idx].center.y, -m[idx].center.z);
+        t = MatrixMultiply(t,MatrixScale(m[idx].scale.x,m[idx].scale.y,m[idx].scale.z));
+        t = MatrixMultiply(t,MatrixRotateXYZ(m[idx].rotation));
+        t = MatrixMultiply(t,MatrixTranslate(m[idx].location.x, m[idx].location.y, m[idx].location.z));
+        t = MatrixMultiply(t,MatrixTranslate(m[idx].center.x,m[idx].center.y,m[idx].center.z));
+        m[idx].model.transform = t;
+
+
+        m_history.push_back({name,model,texture});
+
+
+    }
+
+    m_history_idx = m_history.size();
 
 }

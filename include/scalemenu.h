@@ -8,7 +8,7 @@ class ScaleMenu
         ScaleMenu();
         ScaleMenu(int width, int height);
         virtual ~ScaleMenu();
-        void handleInput(STATE *currentState,std::vector<MODELX> & models, std::vector<BoundingBox> & bboxs);
+        void handleInput(STATE *currentState,std::vector<MODELX> & models);
         void drawMenu(void);
         bool isVisible(void)
         {

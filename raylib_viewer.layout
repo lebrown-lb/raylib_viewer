@@ -2,55 +2,104 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="include/common.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src/common.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="52" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="include/movemenu.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="39" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="include/openmenu.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="39" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="include/rotatemenu.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="62" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="14446" topLine="24" />
+			<Cursor1 position="4210" topLine="15" />
 		</Cursor>
 		<Folding>
-			<Collapse line="60" />
-			<Collapse line="93" />
-			<Collapse line="130" />
-			<Collapse line="143" />
-			<Collapse line="163" />
-			<Collapse line="188" />
-			<Collapse line="200" />
-			<Collapse line="212" />
-			<Collapse line="227" />
-			<Collapse line="391" />
-			<Collapse line="406" />
-			<Collapse line="414" />
-			<Collapse line="536" />
-			<Collapse line="613" />
+			<Collapse line="6" />
+			<Collapse line="39" />
+			<Collapse line="114" />
+			<Collapse line="149" />
+			<Collapse line="177" />
+			<Collapse line="206" />
+			<Collapse line="236" />
+			<Collapse line="248" />
+			<Collapse line="260" />
+			<Collapse line="275" />
 		</Folding>
-	</File>
-	<File name="src/movemenu.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="23" topLine="0" />
-		</Cursor>
 	</File>
 	<File name="src/openmenu.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1597" topLine="17" />
+			<Cursor1 position="1059" topLine="8" />
+		</Cursor>
+		<Folding>
+			<Collapse line="11" />
+			<Collapse line="37" />
+			<Collapse line="187" />
+			<Collapse line="220" />
+			<Collapse line="256" />
+			<Collapse line="300" />
+			<Collapse line="317" />
+			<Collapse line="341" />
+		</Folding>
+	</File>
+	<File name="src/rotatemenu.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="25" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src/movemenu.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1191" topLine="21" />
+		</Cursor>
+		<Folding>
+			<Collapse line="9" />
+			<Collapse line="103" />
+		</Folding>
+	</File>
+	<File name="include/movemenu.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="275" topLine="5" />
+		</Cursor>
+	</File>
+	<File name="src/savemenu.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2612" topLine="69" />
+		</Cursor>
+		<Folding>
+			<Collapse line="10" />
+			<Collapse line="83" />
+		</Folding>
+	</File>
+	<File name="include/common.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="931" topLine="7" />
+		</Cursor>
+	</File>
+	<File name="include/rotatemenu.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="42" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include/scalemenu.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="257" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src/scalemenu.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1172" topLine="15" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="7664" topLine="138" />
+		</Cursor>
+		<Folding>
+			<Collapse line="146" />
+			<Collapse line="172" />
+			<Collapse line="192" />
+		</Folding>
+	</File>
+	<File name="include/openmenu.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1376" topLine="30" />
+		</Cursor>
+	</File>
+	<File name="include/savemenu.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="700" topLine="3" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
