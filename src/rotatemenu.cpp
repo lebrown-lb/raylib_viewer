@@ -24,7 +24,7 @@ RotateMenu::~RotateMenu()
 }
 
 
-void RotateMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
+void RotateMenu::handleInput(STATE * currentState,COLLISION & mesh, std::vector<MODELX> & models)
 {
    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
@@ -35,11 +35,13 @@ void RotateMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
         {
             *currentState = MAIN_STATE;
             setVisible(false);
+            mesh.hitInfo.hit = false;
         }
 
         if(CheckCollisionPointRec(mpos, buttonRectangle(m_update)))
         {
             changeSelectedModelRotation(stringsToVector3(m_xrot.contents,m_yrot.contents,m_zrot.contents),models);
+            mesh.hitInfo.hit = false;
         }
 
         if(CheckCollisionPointRec(mpos, textBoxRectangle(m_xrot)))
@@ -47,6 +49,7 @@ void RotateMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
             setTextBoxSelection(m_xrot, true);
             setTextBoxSelection(m_yrot, false);
             setTextBoxSelection(m_zrot, false);
+            mesh.hitInfo.hit = false;
 
         }
         else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_yrot)))
@@ -54,12 +57,14 @@ void RotateMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
             setTextBoxSelection(m_xrot, false);
             setTextBoxSelection(m_yrot, true);
             setTextBoxSelection(m_zrot, false);
+            mesh.hitInfo.hit = false;
         }
         else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_zrot)))
         {
             setTextBoxSelection(m_xrot, false);
             setTextBoxSelection(m_yrot, false);
             setTextBoxSelection(m_zrot, true);
+            mesh.hitInfo.hit = false;
         }
         else
         {

@@ -24,7 +24,7 @@ SaveMenu::~SaveMenu()
 }
 
 
-void SaveMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
+void SaveMenu::handleInput(STATE * currentState, COLLISION & mesh, std::vector<MODELX> & models)
 {
    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
@@ -35,16 +35,19 @@ void SaveMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
         {
             *currentState = MAIN_STATE;
             setVisible(false);
+            mesh.hitInfo.hit = false;
         }
 
         if(CheckCollisionPointRec(mpos, buttonRectangle(m_save)))
         {
             saveSceneFile(m_file.contents,models);
+            mesh.hitInfo.hit = false;
         }
 
         if(CheckCollisionPointRec(mpos, textBoxRectangle(m_file)))
         {
             setTextBoxSelection(m_file, true);
+            mesh.hitInfo.hit = false;
         }
         else
         {

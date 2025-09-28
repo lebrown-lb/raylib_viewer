@@ -38,7 +38,7 @@ OpenMenu::~OpenMenu()
 }
 
 
-void OpenMenu::handleInput(STATE * currentState,RayCollision collision, std::vector<MODELX> & models)
+void OpenMenu::handleInput(STATE * currentState,RayCollision collision,COLLISION & mesh, std::vector<MODELX> & models)
 {
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
@@ -48,6 +48,7 @@ void OpenMenu::handleInput(STATE * currentState,RayCollision collision, std::vec
         {
             *currentState = MAIN_STATE;
             setVisible(false);
+            mesh.hitInfo.hit = false;
         }
         else if(CheckCollisionPointRec(mpos, buttonRectangle(m_load)))
         {
@@ -55,6 +56,7 @@ void OpenMenu::handleInput(STATE * currentState,RayCollision collision, std::vec
             loadModelx(m_name.contents, m_model.contents,m_texture.contents,tmp,models);
             m_history.push_back({m_name.contents,m_model.contents,m_texture.contents});
             m_history_idx = m_history.size();
+            mesh.hitInfo.hit = false;
         }
         else if(CheckCollisionPointRec(mpos, buttonRectangle(m_clear)))
         {
@@ -72,10 +74,13 @@ void OpenMenu::handleInput(STATE * currentState,RayCollision collision, std::vec
                 m_ystart.contents = "";
             else if(m_zstart.selected)
                 m_zstart.contents = "";
+
+            mesh.hitInfo.hit = false;
         }
         else if(CheckCollisionPointRec(mpos, buttonRectangle(m_loadScene)))
         {
             loadSceneFile(m_scene.contents, models);
+            mesh.hitInfo.hit = false;
         }
 
         if(CheckCollisionPointRec(mpos, textBoxRectangle(m_name)))
@@ -88,6 +93,8 @@ void OpenMenu::handleInput(STATE * currentState,RayCollision collision, std::vec
             setTextBoxSelection(m_ystart, false);
             setTextBoxSelection(m_zstart, false);
 
+            mesh.hitInfo.hit = false;
+
 
         }
         else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_model)))
@@ -99,6 +106,8 @@ void OpenMenu::handleInput(STATE * currentState,RayCollision collision, std::vec
             setTextBoxSelection(m_xstart, false);
             setTextBoxSelection(m_ystart, false);
             setTextBoxSelection(m_zstart, false);
+
+            mesh.hitInfo.hit = false;
         }
         else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_texture)))
         {
@@ -109,6 +118,8 @@ void OpenMenu::handleInput(STATE * currentState,RayCollision collision, std::vec
             setTextBoxSelection(m_xstart, false);
             setTextBoxSelection(m_ystart, false);
             setTextBoxSelection(m_zstart, false);
+
+            mesh.hitInfo.hit = false;
         }
         else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_scene)))
         {
@@ -119,6 +130,8 @@ void OpenMenu::handleInput(STATE * currentState,RayCollision collision, std::vec
             setTextBoxSelection(m_xstart, false);
             setTextBoxSelection(m_ystart, false);
             setTextBoxSelection(m_zstart, false);
+
+            mesh.hitInfo.hit = false;
         }
         else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_xstart)))
         {
@@ -129,6 +142,8 @@ void OpenMenu::handleInput(STATE * currentState,RayCollision collision, std::vec
             setTextBoxSelection(m_xstart, true);
             setTextBoxSelection(m_ystart, false);
             setTextBoxSelection(m_zstart, false);
+
+            mesh.hitInfo.hit = false;
         }
         else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_ystart)))
         {
@@ -139,6 +154,8 @@ void OpenMenu::handleInput(STATE * currentState,RayCollision collision, std::vec
             setTextBoxSelection(m_xstart, false);
             setTextBoxSelection(m_ystart, true);
             setTextBoxSelection(m_zstart, false);
+
+            mesh.hitInfo.hit = false;
         }
         else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_zstart)))
         {
@@ -149,6 +166,8 @@ void OpenMenu::handleInput(STATE * currentState,RayCollision collision, std::vec
             setTextBoxSelection(m_xstart, false);
             setTextBoxSelection(m_ystart, false);
             setTextBoxSelection(m_zstart, true);
+
+            mesh.hitInfo.hit = false;
         }
         else
         {

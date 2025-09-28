@@ -24,7 +24,7 @@ MoveMenu::~MoveMenu()
 }
 
 
-void MoveMenu::handleInput(STATE * currentState,RayCollision collision, std::vector<MODELX> & models)
+void MoveMenu::handleInput(STATE * currentState,RayCollision collision,COLLISION & mesh, std::vector<MODELX> & models)
 {
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
@@ -35,11 +35,13 @@ void MoveMenu::handleInput(STATE * currentState,RayCollision collision, std::vec
         {
             *currentState = MAIN_STATE;
             setVisible(false);
+            mesh.hitInfo.hit = false;
         }
 
         if(CheckCollisionPointRec(mpos, buttonRectangle(m_update)))
         {
             changeSelectedModelLocation(stringsToVector3(m_xpos.contents, m_ypos.contents, m_zpos.contents), models);
+            mesh.hitInfo.hit = false;
         }
 
         if(CheckCollisionPointRec(mpos, textBoxRectangle(m_xpos)))
@@ -47,6 +49,7 @@ void MoveMenu::handleInput(STATE * currentState,RayCollision collision, std::vec
             setTextBoxSelection(m_xpos, true);
             setTextBoxSelection(m_ypos, false);
             setTextBoxSelection(m_zpos, false);
+            mesh.hitInfo.hit = false;
 
         }
         else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_ypos)))
@@ -54,12 +57,14 @@ void MoveMenu::handleInput(STATE * currentState,RayCollision collision, std::vec
             setTextBoxSelection(m_xpos, false);
             setTextBoxSelection(m_ypos, true);
             setTextBoxSelection(m_zpos, false);
+            mesh.hitInfo.hit = false;
         }
         else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_zpos)))
         {
             setTextBoxSelection(m_xpos, false);
             setTextBoxSelection(m_ypos, false);
             setTextBoxSelection(m_zpos, true);
+            mesh.hitInfo.hit = false;
         }
         else
         {

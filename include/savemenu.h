@@ -8,7 +8,7 @@ class SaveMenu
         SaveMenu();
         SaveMenu(int width, int height);
         virtual ~SaveMenu();
-        void handleInput(STATE *currentState,std::vector<MODELX> & models);
+        void handleInput(STATE *currentState,COLLISION & mesh,std::vector<MODELX> & models);
         void drawMenu(void);
         bool isVisible(void)
         {

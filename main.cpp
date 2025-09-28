@@ -34,12 +34,6 @@
 #define FLT_MAX     340282346638528859811704183484516925440.0f     // Maximum value of a float, from bit pattern 01111111011111111111111111111111
 
 
-struct COLLISION{
-    std::string modelName;
-    RayCollision hitInfo;
-};
-
-
 struct QUAD{
     Vector3 g0;
     Vector3 g1;
@@ -168,34 +162,12 @@ int main(void)
         }
 
 
-
         if(mesh.hitInfo.hit)
         {
             collision = mesh.hitInfo;
             cursorColor = PURPLE;
             hitObjectName = mesh.modelName.c_str();
-
-            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-            {
-                for(size_t i = 0; i < models.size();i++)
-                {
-                    if(models[i].name == mesh.modelName)
-                    {
-                        if(models[i].selected)
-                            models[i].selected = false;
-                        else
-                            models[i].selected = true;
-                    }
-                }
-            }
         }
-        else if(currentState == MAIN_STATE && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-        {
-            for(size_t i = 0; i < models.size();i++)
-                models[i].selected = false;
-
-        }
-
 
         if(currentState == MAIN_STATE)
         {
@@ -243,16 +215,39 @@ int main(void)
 
 
         if(open_menu.isVisible() && (currentState == OPEN_MENU_STATE))
-            open_menu.handleInput(&currentState,collision,models);
+            open_menu.handleInput(&currentState,collision,mesh,models);
         else if(move_menu.isVisible() && (currentState == MOVE_MENU_STATE))
-            move_menu.handleInput(&currentState,collision,models);
+            move_menu.handleInput(&currentState,collision,mesh,models);
         else if(rotate_menu.isVisible() && (currentState == ROTATE_MENU_STATE))
-            rotate_menu.handleInput(&currentState,models);
+            rotate_menu.handleInput(&currentState,mesh,models);
         else if(scale_menu.isVisible() && (currentState == SCALE_MENU_STATE))
-            scale_menu.handleInput(&currentState,models);
+            scale_menu.handleInput(&currentState,mesh,models);
         else if(save_menu.isVisible() && (currentState == SAVE_MENU_STATE))
-            save_menu.handleInput(&currentState,models);
+            save_menu.handleInput(&currentState,mesh,models);
 
+
+        if(mesh.hitInfo.hit)
+        {
+            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            {
+                for(size_t i = 0; i < models.size();i++)
+                {
+                    if(models[i].name == mesh.modelName)
+                    {
+                        if(models[i].selected)
+                            models[i].selected = false;
+                        else
+                            models[i].selected = true;
+                    }
+                }
+            }
+        }
+        else if(currentState == MAIN_STATE && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        {
+            for(size_t i = 0; i < models.size();i++)
+                models[i].selected = false;
+
+        }
 
         //----------------------------------------------------------------------------------
 

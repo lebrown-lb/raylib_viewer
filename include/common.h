@@ -24,6 +24,12 @@ struct MODELX{
     BoundingBox bbox;
 };
 
+
+struct COLLISION{
+    std::string modelName;
+    RayCollision hitInfo;
+};
+
 struct TEXTBOX{
     const char * name = nullptr;
     int xpos;

@@ -24,7 +24,7 @@ ScaleMenu::~ScaleMenu()
 }
 
 
-void ScaleMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
+void ScaleMenu::handleInput(STATE * currentState,COLLISION & mesh, std::vector<MODELX> & models)
 {
    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
@@ -35,11 +35,13 @@ void ScaleMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
         {
             *currentState = MAIN_STATE;
             setVisible(false);
+            mesh.hitInfo.hit = false;
         }
 
         if(CheckCollisionPointRec(mpos, buttonRectangle(m_update)))
         {
             changeSelectedModelScale(stringsToVector3(m_xscale.contents,m_yscale.contents,m_zscale.contents),models);
+            mesh.hitInfo.hit = false;
         }
 
         if(CheckCollisionPointRec(mpos, textBoxRectangle(m_xscale)))
@@ -47,6 +49,7 @@ void ScaleMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
             setTextBoxSelection(m_xscale, true);
             setTextBoxSelection(m_yscale, false);
             setTextBoxSelection(m_zscale, false);
+            mesh.hitInfo.hit = false;
 
         }
         else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_yscale)))
@@ -54,12 +57,14 @@ void ScaleMenu::handleInput(STATE * currentState, std::vector<MODELX> & models)
             setTextBoxSelection(m_xscale, false);
             setTextBoxSelection(m_yscale, true);
             setTextBoxSelection(m_zscale, false);
+            mesh.hitInfo.hit = false;
         }
         else if(CheckCollisionPointRec(mpos, textBoxRectangle(m_zscale)))
         {
             setTextBoxSelection(m_xscale, false);
             setTextBoxSelection(m_yscale, false);
             setTextBoxSelection(m_zscale, true);
+            mesh.hitInfo.hit = false;
         }
         else
         {
