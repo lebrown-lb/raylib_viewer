@@ -26,6 +26,7 @@ class MoveMenu
         TEXTBOX m_xpos;
         TEXTBOX m_ypos;
         TEXTBOX m_zpos;
+        RADIOBUTTON m_relative;
         PUSHBUTTON m_update;
         PUSHBUTTON m_close;
 

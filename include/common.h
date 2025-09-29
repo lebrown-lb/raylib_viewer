@@ -49,6 +49,14 @@ struct PUSHBUTTON{
     int height;
 };
 
+struct RADIOBUTTON{
+    const char * name = nullptr;
+    int xpos;
+    int ypos;
+    float radius;
+    bool value = false;
+};
+
 enum STATE{
     MAIN_STATE,
     OPEN_MENU_STATE,
@@ -71,7 +79,7 @@ Vector3 stringsToVector3(std::string xstr, std::string ystr, std::string zstr);
 
 void loadModelx(std::string name, std::string model, std::string texture, Vector3 start, std::vector<MODELX> & m);
 
-void changeSelectedModelLocation(Vector3 location, std::vector<MODELX> & m);
+void changeSelectedModelLocation(Vector3 location, std::vector<MODELX> & m, bool relative);
 
 void changeSelectedModelRotation(Vector3 rotation, std::vector<MODELX> & m);
 

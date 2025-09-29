@@ -13,6 +13,7 @@ MoveMenu::MoveMenu(int width, int height)
     m_xpos = {"X POSITION", 10, m_screenHeight-35, w, 25, BLACK, "", false};
     m_ypos = {"Y POSITION", space + 10, m_screenHeight-35, w, 25, BLACK, "", false};
     m_zpos = {"Z POSITION", (space * 2) + 10, m_screenHeight-35, w, 25, BLACK, "", false};
+    m_relative = {"Relative Move",m_screenWidth - 20, m_screenHeight - 95, 8.0,false};
     m_update = {"UPDATE",(space * 3) + 10, m_screenHeight-35, w, 25 };
     m_close = {"CLOSE", 10, m_screenHeight - 80, m_screenWidth - 20,25};
 
@@ -40,8 +41,16 @@ void MoveMenu::handleInput(STATE * currentState,RayCollision collision,COLLISION
 
         if(CheckCollisionPointRec(mpos, buttonRectangle(m_update)))
         {
-            changeSelectedModelLocation(stringsToVector3(m_xpos.contents, m_ypos.contents, m_zpos.contents), models);
+            changeSelectedModelLocation(stringsToVector3(m_xpos.contents, m_ypos.contents, m_zpos.contents), models, m_relative.value);
             mesh.hitInfo.hit = false;
+        }
+        if(CheckCollisionPointCircle(mpos,{m_relative.xpos,m_relative.ypos}, m_relative.radius))
+        {
+            if(m_relative.value)
+                m_relative.value = false;
+            else
+                m_relative.value = true;
+
         }
 
         if(CheckCollisionPointRec(mpos, textBoxRectangle(m_xpos)))
@@ -124,6 +133,12 @@ void MoveMenu::drawMenu(void)
 
     DrawRectangle(m_close.xpos, m_close.ypos, m_close.width, m_close.height, GRAY);
     DrawText(m_close.name, (m_close.xpos + (m_close.width/2) - 20), m_close.ypos + 8, 10, WHITE);
+
+    if(m_relative.value)
+        DrawCircle(m_relative.xpos, m_relative.ypos, m_relative.radius,BLACK);
+    else
+        DrawCircleLines(m_relative.xpos, m_relative.ypos, m_relative.radius,BLACK);
+    DrawText(m_relative.name, m_relative.xpos - 85, m_relative.ypos - 4,10,BLACK);
 
 
 }

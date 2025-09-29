@@ -161,7 +161,7 @@ void loadModelx(std::string name, std::string model, std::string texture, Vector
     m[idx].model.transform = MatrixTranslate(m[idx].location.x, m[idx].location.y, m[idx].location.z);
 }
 
-void changeSelectedModelLocation(Vector3 location, std::vector<MODELX> & m)
+void changeSelectedModelLocation(Vector3 location, std::vector<MODELX> & m, bool relative)
 {
 
     for(size_t i = 0; i < m.size();i++)
@@ -169,7 +169,15 @@ void changeSelectedModelLocation(Vector3 location, std::vector<MODELX> & m)
         if(m[i].selected)
         {
             Matrix t;
-            m[i].location = location;
+            if(relative)
+            {
+                m[i].location.x += location.x;
+                m[i].location.y += location.y;
+                m[i].location.z += location.z;
+
+            }
+            else
+                m[i].location = location;
 
             t = MatrixTranslate(-m[i].center.x, -m[i].center.y, -m[i].center.z);
             t = MatrixMultiply(t,MatrixScale(m[i].scale.x,m[i].scale.y,m[i].scale.z));
