@@ -127,14 +127,19 @@ Vector3 calculateModelCenter(Model & x)
 Vector3 stringsToVector3(std::string xstr, std::string ystr, std::string zstr)
 {
     Vector3 tmp;
-    float x = std::stof(xstr);
-    float y = std::stof(ystr);
-    float z = std::stof(zstr);
 
-    tmp.x = x;
-    tmp.y = y;
-    tmp.z = z;
+    if((xstr == "") || (ystr == "") || (zstr == ""))
+        tmp = {0.0f,0.0f,0.0f};
+    else
+    {
+        float x = std::stof(xstr);
+        float y = std::stof(ystr);
+        float z = std::stof(zstr);
 
+        tmp.x = x;
+        tmp.y = y;
+        tmp.z = z;
+    }
     return tmp;
 
 }

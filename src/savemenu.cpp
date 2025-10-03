@@ -13,7 +13,8 @@ SaveMenu::SaveMenu(int width, int height)
     int w = space - 20;
     m_file = {"File Location", 10, m_screenHeight-35, w * 3 + 20, 25, BLACK, "", false};
     m_save = {"SAVE",(space * 3) + 10, m_screenHeight-35, w, 25 };
-    m_close = {"CLOSE", 10, m_screenHeight - 80, m_screenWidth - 20,25};
+    m_clear = {"CLEAR", 10, m_screenHeight - 80, m_screenWidth - 20,25};
+    m_close = {"CLOSE", 10, m_screenHeight - 115, m_screenWidth - 20,25};
 
     m_timestamp = std::chrono::steady_clock::now();
 }
@@ -42,6 +43,12 @@ void SaveMenu::handleInput(STATE * currentState, COLLISION & mesh, std::vector<M
         {
             saveSceneFile(m_file.contents,models);
             mesh.hitInfo.hit = false;
+        }
+        else if(CheckCollisionPointRec(mpos, buttonRectangle(m_clear)))
+        {
+            if(m_file.selected)
+                m_file.contents = "";
+
         }
 
         if(CheckCollisionPointRec(mpos, textBoxRectangle(m_file)))
@@ -94,6 +101,9 @@ void SaveMenu::drawMenu(void)
 
     DrawRectangle(m_close.xpos, m_close.ypos, m_close.width, m_close.height, GRAY);
     DrawText(m_close.name, (m_close.xpos + (m_close.width/2) - 20), m_close.ypos + 8, 10, WHITE);
+
+    DrawRectangle(m_clear.xpos, m_clear.ypos, m_clear.width, m_clear.height, GRAY);
+    DrawText(m_clear.name, (m_clear.xpos + (m_clear.width/2) - 20), m_clear.ypos + 8, 10, WHITE);
 }
 
 

@@ -24,6 +24,7 @@ class SaveMenu
             m_screenHeight = height;
         }
         TEXTBOX m_file;
+        PUSHBUTTON m_clear;
         PUSHBUTTON m_save;
         PUSHBUTTON m_close;
 
