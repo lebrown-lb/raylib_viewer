@@ -210,11 +210,11 @@ void OpenMenu::handleInput(STATE * currentState,RayCollision collision,COLLISION
             m_texture.contents.pop_back();
         else if(m_scene.selected && (m_scene.contents.size() > 0))
             m_scene.contents.pop_back();
-        else if(m_xstart.selected && (m_model.contents.size() > 0))
+        else if(m_xstart.selected && (m_xstart.contents.size() > 0))
             m_xstart.contents.pop_back();
-        else if(m_ystart.selected && (m_texture.contents.size() > 0))
+        else if(m_ystart.selected && (m_ystart.contents.size() > 0))
             m_ystart.contents.pop_back();
-        else if(m_zstart.selected && (m_scene.contents.size() > 0))
+        else if(m_zstart.selected && (m_zstart.contents.size() > 0))
             m_zstart.contents.pop_back();
 
     }

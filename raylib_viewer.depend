@@ -15,16 +15,21 @@
 	"include/scalemenu.h"
 	"include/savemenu.h"
 
-1732533343 /usr/include/raylib.h
+1777114193 /usr/include/raylib.h
 	<stdarg.h>
 	<stdbool.h>
 
-1732533343 /usr/include/raymath.h
+1777114193 /usr/include/raymath.h
 	<math.h>
+	<nmmintrin.h>
+	<smmintrin.h>
+	<tmmintrin.h>
+	<pmmintrin.h>
+	<emmintrin.h>
+	<xmmintrin.h>
 
-1755088226 /usr/include/math.h
+1790526947 /usr/include/math.h
 	<bits/libc-header-start.h>
-	<bits/types.h>
 	<bits/math-vector.h>
 	<bits/floatn.h>
 	<bits/flt-eval-method.h>
@@ -77,39 +82,39 @@
 	<bits/mathcalls-narrow.h>
 	<bits/iscanonical.h>
 
-1755088226 /usr/include/bits/libc-header-start.h
+1790526947 /usr/include/bits/libc-header-start.h
 	<features.h>
 
-1755088226 /usr/include/features.h
+1790526947 /usr/include/features.h
 	<features-time64.h>
 	<stdc-predef.h>
 	<sys/cdefs.h>
 	<gnu/stubs.h>
 
-1755088226 /usr/include/features-time64.h
+1790526947 /usr/include/features-time64.h
 	<bits/wordsize.h>
 	<bits/timesize.h>
 
-1755088226 /usr/include/bits/wordsize.h
+1790526947 /usr/include/bits/wordsize.h
 
-1755088226 /usr/include/bits/timesize.h
+1790526947 /usr/include/bits/timesize.h
 	<bits/wordsize.h>
 
-1755088226 /usr/include/stdc-predef.h
+1790526947 /usr/include/stdc-predef.h
 
-1755088226 /usr/include/sys/cdefs.h
+1790526947 /usr/include/sys/cdefs.h
 	<features.h>
 	<bits/wordsize.h>
 	<bits/long-double.h>
 
-1755088226 /usr/include/bits/long-double.h
+1790526947 /usr/include/bits/long-double.h
 
-1755088226 /usr/include/gnu/stubs.h
+1790526947 /usr/include/gnu/stubs.h
 	<gnu/stubs-32.h>
 	<gnu/stubs-64.h>
 	<gnu/stubs-x32.h>
 
-1755088226 /usr/include/gnu/stubs-64.h
+1790526947 /usr/include/gnu/stubs-64.h
 
 1755088226 /usr/include/bits/types.h
 	<features.h>
@@ -122,34 +127,34 @@
 
 1755088226 /usr/include/bits/time64.h
 
-1755088226 /usr/include/bits/math-vector.h
+1790526947 /usr/include/bits/math-vector.h
 	<bits/libm-simd-decl-stubs.h>
 
-1755088226 /usr/include/bits/libm-simd-decl-stubs.h
+1790526947 /usr/include/bits/libm-simd-decl-stubs.h
 
-1755088226 /usr/include/bits/floatn.h
+1790526947 /usr/include/bits/floatn.h
 	<features.h>
 	<bits/floatn-common.h>
 
-1755088226 /usr/include/bits/floatn-common.h
+1790526947 /usr/include/bits/floatn-common.h
 	<features.h>
 	<bits/long-double.h>
 
-1755088226 /usr/include/bits/flt-eval-method.h
+1790526947 /usr/include/bits/flt-eval-method.h
 
-1755088226 /usr/include/bits/fp-logb.h
+1790526947 /usr/include/bits/fp-logb.h
 
-1755088226 /usr/include/bits/fp-fast.h
+1790526947 /usr/include/bits/fp-fast.h
 
-1755088226 /usr/include/bits/mathcalls-macros.h
+1790526947 /usr/include/bits/mathcalls-macros.h
 
-1755088226 /usr/include/bits/mathcalls-helper-functions.h
+1790526947 /usr/include/bits/mathcalls-helper-functions.h
 
-1755088226 /usr/include/bits/mathcalls.h
+1790526947 /usr/include/bits/mathcalls.h
 
-1755088226 /usr/include/bits/mathcalls-narrow.h
+1790526947 /usr/include/bits/mathcalls-narrow.h
 
-1755088226 /usr/include/bits/iscanonical.h
+1790526947 /usr/include/bits/iscanonical.h
 
 1759079484 source:/home/lebrown/Documents/raylib_projects/raylib_viewer/src/openmenu.cpp
 	"openmenu.h"
@@ -184,7 +189,7 @@
 1759081579 /home/lebrown/Documents/raylib_projects/raylib_viewer/include/rotatemenu.h
 	"common.h"
 
-1759173595 source:/home/lebrown/Documents/raylib_projects/raylib_viewer/src/common.cpp
+1760986623 source:/home/lebrown/Documents/raylib_projects/raylib_viewer/src/common.cpp
 	"common.h"
 	<iostream>
 
